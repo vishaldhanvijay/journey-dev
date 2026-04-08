@@ -1,0 +1,27 @@
+name: Deploy to EC2 (Stage)
+
+on:
+  push:
+    branches:
+      - stage
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd journey-dev
+            git pull origin stage
+            mvn clean package
+            pkill java || true
+            nohup java -jar target/*.jar > app.log 2>&1 &
