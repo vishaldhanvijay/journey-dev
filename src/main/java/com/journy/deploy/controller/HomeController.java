@@ -10,6 +10,6 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(){
-        return "Project is working fine.";
+        return "Project is working fine.....";
     }
 }
