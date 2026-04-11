@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: journey-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: journey-app
+  template:
+    metadata:
+      labels:
+        app: journey-app
+    spec:
+      containers:
+        - name: journey-app
+          image: dhanvijayvsl/journey-app:latest
+          ports:
+            - containerPort: 8080
